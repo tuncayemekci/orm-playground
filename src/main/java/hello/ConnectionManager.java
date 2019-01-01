@@ -44,7 +44,7 @@ public class ConnectionManager {
             User.users.clear();
 
             while (rs.next()) {
-                User user = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
+                User user = new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6));
                 User.users.put(rs.getInt(1), user);
             }
 
@@ -60,13 +60,14 @@ public class ConnectionManager {
         PreparedStatement preparedStatement = null;
 
         try {
-            preparedStatement = con.prepareStatement("INSERT INTO users (username, name, surname, status) values (?,?,?,?)");
+            preparedStatement = con.prepareStatement("INSERT INTO users (username, password, name, surname, status) values (?,?,?,?, ?)");
 
             for (int i = 0; i < s; i++) {
                 preparedStatement.setString(1, Tusable.randomStr(5));
                 preparedStatement.setString(2, Tusable.randomStr(5));
                 preparedStatement.setString(3, Tusable.randomStr(5));
-                preparedStatement.setString(4, "1");
+                preparedStatement.setString(4, Tusable.randomStr(5));
+                preparedStatement.setString(5, "1");
                 preparedStatement.executeUpdate();
             }
         } catch (SQLException e){
@@ -74,7 +75,7 @@ public class ConnectionManager {
         }
 
         getUsersTableFromDBToMap();
-        
+
         System.out.println(s + " random users have been added to DB and HashMap has been updated from DB.");
         return (HashMap<Integer, User>) User.users;
     }

@@ -4,7 +4,11 @@ public class test {
 
     public static void main(String[] args) {
 
-        ConnectionManager cm = new ConnectionManager();
+        ConnectionManager.getUsersTableFromDBToMap();
+        ConnectionManager.addRandomUsersToDB(2);
+        User.addUsersMapToJson();
+        User.printUsersMap();
+
 
     }
 }
